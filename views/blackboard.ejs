@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>Todo list view</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="stylesheets/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/cover.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="javascripts/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand" id="dateRead"><%= date %></h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="/interface">Edit</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" id="todayhw">
+              <h1 class="text-primary">今日作業</h1>
+            </div>
+            <div class="col-md-4" id="tomorrowbring">
+              <h1 class="text-primary">明天要帶</h1>
+            </div>
+            <div class="col-md-4" id="tomorrowtest">
+              <h1 class="text-primary">明天要考</h1>
+            </div>
+          </div>
+          <!-- <div class="inner cover">
+            <h1 class="cover-heading">Cover your page.</h1>
+            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <p class="lead">
+              <a href="#" class="btn btn-lg btn-default">Learn more</a>
+            </p>
+          </div> -->
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>&copy; <a href="https://www.facebook.com/profile.php?id=100009254355771">SNstudio</a> 2016</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="javascripts/vendor/jquery.min.js"><\/script>')</script>
+    <script src="javascripts/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="javascripts/ie10-viewport-bug-workaround.js"></script>
+    <script>
+      var date = $('#dateRead').text();
+      console.log('date is ' + date);
+      $.ajax({
+        method: "GET",
+        url: "api/v1/todo?date=" + date
+      })
+        .done(function(data) {
+          // alert(data);
+
+          console.log(data);
+          var hwArray = data.result.hw.split('\n');
+          for (var i = 0; i < hwArray.length; i++) {
+            // hwArray[i]
+            $( "#todayhw" ).append( "<h2>" + hwArray[i] + "</h2>" );
+          }
+
+          var tobringArray = data.result.toBring.split('\n');
+          for (var i = 0; i < tobringArray.length; i++) {
+            // tobringArray[i]
+            $( "#tomorrowbring" ).append( "<h2>" + tobringArray[i] + "</h2>" );
+          }
+
+          var testArray = data.result.test.split('\n');
+          for (var i = 0; i < testArray.length; i++) {
+            // testArray[i]
+            $( "#tomorrowtest" ).append( "<h2>" + testArray[i] + "</h2>" );
+          }
+          // console.log(hwArray);
+          // $("#todayhw").text(data.result.hw);
+          // console.log(data.result.hw);
+          // alert(data.result.hw);
+          // $("#tomorrowbring").text(data.result.toBring);
+          // $("#tomorrowtest").text(data.result.test);
+        })
+        .fail(function(data) {
+          // alert("fail");
+          console.log(data);
+          $("#todayhw").text("");
+          $("#tomorrowbring").text("Loading data fail !!!");
+          $("#tomorrowtest").text("");
+        });
+    </script>
+  </body>
+</html>
