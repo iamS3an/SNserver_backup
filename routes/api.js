@@ -1,5 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const mongodbUrl = 'mongodb://localhost:27017/todo';
+const mongodbUrl = 'mongodb://snserver:1qa2ws3ed@ds017636.mlab.com:17636/seandb';
 var express = require('express');
 var router = express.Router();
 
