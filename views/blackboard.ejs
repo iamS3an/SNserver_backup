@@ -37,10 +37,10 @@
 
       <div class="site-wrapper-inner">
 
-        <div class="cover-container">
+        <div class="cover-container blackboard-width">
 
           <div class="masthead clearfix">
-            <div class="inner">
+            <div class="inner blackboard-width">
               <h3 class="masthead-brand" id="dateRead"><%= date %></h3>
               <nav>
                 <ul class="nav masthead-nav">
@@ -51,13 +51,14 @@
           </div>
           <div class="row">
             <div class="col-md-4" id="todayhw">
-              <h1 class="text-primary">今日作業</h1>
+              <h1 class="bg-primary blackboard-title">今日作業</h1>
             </div>
             <div class="col-md-4" id="tomorrowbring">
-              <h1 class="text-primary">明天要帶</h1>
+              <h1 class="bg-primary blackboard-title">明天要帶</h1>
+              <div class="circleLoader" id="circleLoader">Loading...</div>
             </div>
             <div class="col-md-4" id="tomorrowtest">
-              <h1 class="text-primary">明天要考</h1>
+              <h1 class="bg-primary blackboard-title">明天要考</h1>
             </div>
           </div>
           <!-- <div class="inner cover">
@@ -69,7 +70,7 @@
           </div> -->
 
           <div class="mastfoot">
-            <div class="inner">
+            <div class="inner blackboard-width">
               <p>&copy; <a href="https://www.facebook.com/profile.php?id=100009254355771">SNstudio</a> 2016</p>
             </div>
           </div>
@@ -88,48 +89,6 @@
     <script src="javascripts/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="javascripts/ie10-viewport-bug-workaround.js"></script>
-    <script>
-      var date = $('#dateRead').text();
-      console.log('date is ' + date);
-      $.ajax({
-        method: "GET",
-        url: "api/v1/todo?date=" + date
-      })
-        .done(function(data) {
-          // alert(data);
-
-          console.log(data);
-          var hwArray = data.result.hw.split('\n');
-          for (var i = 0; i < hwArray.length; i++) {
-            // hwArray[i]
-            $( "#todayhw" ).append( "<h2>" + hwArray[i] + "</h2>" );
-          }
-
-          var tobringArray = data.result.toBring.split('\n');
-          for (var i = 0; i < tobringArray.length; i++) {
-            // tobringArray[i]
-            $( "#tomorrowbring" ).append( "<h2>" + tobringArray[i] + "</h2>" );
-          }
-
-          var testArray = data.result.test.split('\n');
-          for (var i = 0; i < testArray.length; i++) {
-            // testArray[i]
-            $( "#tomorrowtest" ).append( "<h2>" + testArray[i] + "</h2>" );
-          }
-          // console.log(hwArray);
-          // $("#todayhw").text(data.result.hw);
-          // console.log(data.result.hw);
-          // alert(data.result.hw);
-          // $("#tomorrowbring").text(data.result.toBring);
-          // $("#tomorrowtest").text(data.result.test);
-        })
-        .fail(function(data) {
-          // alert("fail");
-          console.log(data);
-          $("#todayhw").text("");
-          $("#tomorrowbring").text("Loading data fail !!!");
-          $("#tomorrowtest").text("");
-        });
-    </script>
+    <script src="javascripts/schoolTodoList.js"></script>
   </body>
 </html>

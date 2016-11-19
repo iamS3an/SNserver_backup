@@ -50,11 +50,14 @@
                 網頁式聯絡簿
               </td>
               <td>
-                <input type="text" class="form-control" placeholder="請輸入日期" id="dateInput">
+                <input type="text" class="form-control" placeholder="請輸入日期" id="dateInput" onchange="query(this.value)">
               </td>
               <td>&nbsp;
                 <button type="button" class="btn btn-success" id="queryButton">查詢</button>
               </td>
+              <td>
+
+            </td>
             </tr>
           </table>
         </div>
@@ -65,13 +68,26 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-
+    <!-- <div class="spinner">
+      <div class="rect2"></div>
+      <div class="rect3"></div>
+      <div class="rect4"></div>
+      <div class="rect5"></div>
+    </div> -->
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
       <div class="container">
+        <!-- aaaaa
+        <div class="spinner" id="waveLoader">
+          <div class="rect1">aaa</div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
+        </div> -->
         <h1>This website is powered by SNstudio</h1>
         <p>This interface makes it easy for 217 classmates to share and record the important things,
-and it makes it easy to update the todo list that you're sharing. If you have any need please feel free to contact seanlin12345@gmail.com</p>
+and it makes it easy to update the todo list that you're sharing. If you have any need, please feel free to contact seanlin12345@gmail.com</p>
         <button class="btn btn-primary btn-lg" type="text" id="sendButton">送出 &raquo;</button>
         <div style="display:none" class="alert alert-success" role="alert" id="showSuccess">
           <a href="#" class="alert-link">送出成功</a>
@@ -118,6 +134,6 @@ and it makes it easy to update the todo list that you're sharing. If you have an
     <script src="javascripts/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="javascripts/ie10-viewport-bug-workaround.js"></script>
-    <script src="javascripts/connect.js"></script>
+    <script src="javascripts/schoolTodoList.js"></script>
   </body>
 </html>
