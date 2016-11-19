@@ -125,7 +125,7 @@ $("#sendButton").on("click", function(e) {
 
 $("#goViewPage").on("click", function () {
   var dateString = $('#dateInput').val();
-  document.location.href='/blackboard?date=' + dateString;
+  document.location.href='/schoolTodoListBlackboard?date=' + dateString;
 });
 
 /*----------------------------------------------------------------------------*/

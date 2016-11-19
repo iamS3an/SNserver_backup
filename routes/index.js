@@ -55,12 +55,12 @@ function sendTextMessage(sender, text) {
 
 //botzzz
 
-router.get('/interface', function(req, res, next) {
-  res.render('interface', { title: 'Express' });
+router.get('/schoolTodoListInterface', function(req, res, next) {
+  res.render('schoolTodoListInterface', { title: 'Express' });
 });
 
-router.get('/blackboard', function(req, res, next) {
-  res.render('blackboard', { date: req.query.date } );
+router.get('/schoolTodoListBlackboard', function(req, res, next) {
+  res.render('schoolTodoListBlackboard', { date: req.query.date } );
 });
 
 module.exports = router;
