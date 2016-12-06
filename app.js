@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var schoolTodoListApi = require('./routes/schoolTodoListApi');
-var makeItAliveOnHeroku = require('./makeItAliveOnHeroku');
+var messengerBot = require('./daemon/fbChatBot');
+var makeItAliveOnHeroku = require('./daemon/makeItAliveOnHeroku');
 
 var app = express();
 
@@ -58,6 +59,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
+messengerBot.markAsRead();
 makeItAliveOnHeroku.scheduleJob();
 
 module.exports = app;
