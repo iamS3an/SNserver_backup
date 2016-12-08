@@ -13,7 +13,12 @@ const fbBot = () => {
 
     api.listen(function callback(err, message) {
       // api.markAsRead(message.threadID);
-      api.sendMessage(message.body, message.threadID);
+      if(message.body == "time") {
+        api.sendMessage(Date(), message.threadID);
+      }
+      else {
+        api.sendMessage(message.body, message.threadID);
+      }
     });
   });
 };
