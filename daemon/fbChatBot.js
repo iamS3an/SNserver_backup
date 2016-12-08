@@ -1,24 +1,23 @@
 var login = require("facebook-chat-api");
 
-const markAsRead = () => {
+const fbBot = () => {
   login({email: "qsnstudioq@gmail.com", password: "1qa2ws3ed"}, function callback (err, api) {
     if(err) {
       setInterval(markAsRead(), 5 * 1000);
       return console.error(err);
     }
 
-
     api.setOptions({
       forceLogin: true
     });
 
     api.listen(function callback(err, message) {
-      // Marks message as read immediately after they're sent
-      api.markAsRead(message.threadID);
+      // api.markAsRead(message.threadID);
+      api.sendMessage(message.body, message.threadID);
     });
   });
 };
 
 module.exports = {
-  markAsRead,
+  fbBot,
 };

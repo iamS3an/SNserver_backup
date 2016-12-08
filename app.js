@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-messengerBot.markAsRead();
+messengerBot.fbBot();
 makeItAliveOnHeroku.scheduleJob();
 
 module.exports = app;
