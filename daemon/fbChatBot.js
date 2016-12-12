@@ -10,14 +10,17 @@ const fbBot = () => {
     api.setOptions({
       forceLogin: true
     });
-    
+
     api.listen(function callback(err, message) {
       api.markAsRead(message.threadID);
-      if(message.body == "time") {
-        api.sendMessage(Date(), message.threadID);
-      }
-      else {
-        api.sendMessage(message.body, message.threadID);
+      if(message.body[0] == "@") {
+        api.sendMessage("請問你要查詢：\n(1)大耳朵的戰績\n(2)其他", message.threadID);
+          if(message.body == "1" || "(1)") {
+            api.sendMessage("還沒做好XD", message.threadID);
+          }
+          else {
+            api.sendMessage("目前暫不開放", message.threadID);
+          }
       }
     });
   });
