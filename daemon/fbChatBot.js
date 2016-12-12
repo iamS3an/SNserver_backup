@@ -13,7 +13,7 @@ const fbBot = () => {
 
     api.listen(function callback(err, message) {
       api.markAsRead(message.threadID);
-      if(message.body[0] == "@") {
+      if(message.body == "@") {
         api.sendMessage("請問你要查詢：\n(1)大耳朵的戰績\n(2)其他", message.threadID);
           if(message.body == "1" || "(1)") {
             api.sendMessage("還沒做好XD", message.threadID);
