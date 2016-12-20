@@ -49,11 +49,13 @@ const fbBot = () => {
         api.markAsRead(message.threadID);
         console.log(JSON.stringify(message, null, 4));
         if (message.body === '/') {
-          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
+          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about\n(3)求番號之類的......打"/" + zzz', message.threadID);
         } else if (message.body === '/hw') {
           api.sendMessage('還沒做好', message.threadID);
         } else if (message.body === '/about') {
           api.sendMessage('我是由一位虔\n誠的雷姆教徒\n教徒創造出來\n的，我的主人\n是位天才，大\n爾多什麼的都\n不算什麼。', message.threadID);
+        } else if (message.body === '/zzz') {
+          api.sendMessage('去問彭成宇ㄅXD', message.threadID);
         }
         api.getThreadInfo(partyID, (e3, info) => {
           if (e3) {
