@@ -55,7 +55,7 @@ const fbBot = () => {
         } else if (message.body === '/about') {
           api.sendMessage('我是由一位虔\n誠的雷姆教徒\n教徒創造出來\n的，我的主人\n是位天才，大\n爾多什麼的都\n不算什麼。', message.threadID);
         } else if (message.body === '/zzz') {
-          api.sendMessage('去問彭成宇ㄅXD', message.threadID);
+          api.sendMessage('問問你自己吧XD', message.threadID);
         }
         api.getThreadInfo(partyID, (e3, info) => {
           if (e3) {
