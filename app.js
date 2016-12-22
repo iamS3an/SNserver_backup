@@ -58,6 +58,5 @@ app.use((err, req, res, next) => {
 });
 
 messengerBot.fbBot();
-makeItAliveOnHeroku.scheduleJob();
 
 module.exports = app;
