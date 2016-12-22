@@ -49,13 +49,11 @@ const fbBot = () => {
         api.markAsRead(message.threadID);
         console.log(JSON.stringify(message, null, 4));
         if (message.body === '/') {
-          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about\n(3)求番號之類的......打"/" + zzz', message.threadID);
+          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
         } else if (message.body === '/hw') {
           api.sendMessage('還沒做好', message.threadID);
         } else if (message.body === '/about') {
-          api.sendMessage('我是由一位虔\n誠的雷姆教徒\n教徒創造出來\n的，我的主人\n是位天才，大\n爾多什麼的都\n不算什麼。', message.threadID);
-        } else if (message.body === '/zzz') {
-          api.sendMessage('問問你自己吧XD', message.threadID);
+          api.sendMessage('我是屬於SNstudio的fb機器人\n我的主人是林奐呈\n若要參與開發請寄e-mail:\nseanlin12345@gmail.com', message.threadID);
         } else if (message.body === '/SNstudio') {
           api.sendMessage('主人什麼的最棒了XDDDD', message.threadID);
         }
