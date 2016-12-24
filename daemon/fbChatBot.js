@@ -1,6 +1,9 @@
+const MongoClient = require('mongodb').MongoClient;
+const moment = require('moment');
 const login = require('facebook-chat-api');
 const _ = require('lodash');
 
+const mongodbUrl = 'mongodb://snserver:1qa2ws3ed@ds017636.mlab.com:17636/seandb';
 const peterID = '100005650576135';
 const partyID = '1189977174366850';
 // const testID = '100001504021620';
