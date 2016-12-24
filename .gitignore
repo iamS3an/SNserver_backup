@@ -1,0 +1,9 @@
+.remote-sync.json
+.DS_Store
+node_modules/
+*.xlsx
+*.docx
+*.xls
+*.log
+*.lock
+*.out

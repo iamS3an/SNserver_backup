@@ -3,9 +3,9 @@ const _ = require('lodash');
 
 const peterID = '100005650576135';
 const partyID = '1189977174366850';
-const testID = '100001504021620';
+// const testID = '100001504021620';
 const seanID = '100009254355771';
-const testPartyID = '1362278277118706';
+// const testPartyID = '1362278277118706';
 
 const fbBot = () => {
   login({ email: 'qsnstudioq@gmail.com', password: '1qa2ws3ed' }, (e1, api) => {
