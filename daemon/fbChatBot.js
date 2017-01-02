@@ -1,14 +1,43 @@
-const MongoClient = require('mongodb').MongoClient;
 const moment = require('moment');
 const login = require('facebook-chat-api');
 const _ = require('lodash');
+const hwCatcher = require('./hwCatcher');
+const overwatch = require('./overwatch');
 
-const mongodbUrl = 'mongodb://snserver:1qa2ws3ed@ds017636.mlab.com:17636/seandb';
 const peterID = '100005650576135';
 const partyID = '1189977174366850';
 // const testID = '100001504021620';
 const seanID = '100009254355771';
 // const testPartyID = '1362278277118706';
+
+// const mongodb = () => {
+//   MongoClient.connect(mongodbUrl, (err, database) => {
+//     const collection = database.collection('todo');
+//     const todoObject = {
+//       hw: req.body.hw,
+//       toBring: req.body.toBring,
+//       test: req.body.test,
+//       date: req.body.date,
+//     };
+//     const filter = {
+//       date: req.body.date,
+//     };
+//     collection.updateMany(filter, { $set: todoObject }, { upsert: true }, (error, docs) => {
+//       if (!error) {
+//         res.status(201).json({
+//           status: 'success',
+//           result: docs,
+//         });
+//         console.log(JSON.stringify(dogs, null, 4));
+//       } else {
+//         res.status(500).json({
+//           status: 'fail',
+//           result: docs,
+//         });
+//       }
+//     });
+//   });
+// };
 
 const fbBot = () => {
   login({ email: 'qsnstudioq@gmail.com', password: '1qa2ws3ed' }, (e1, api) => {
@@ -54,7 +83,15 @@ const fbBot = () => {
         if (message.body === '/') {
           api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
         } else if (message.body === '/hw') {
-          api.sendMessage('還沒做好', message.threadID);
+          const time = moment().utcOffset('+08:00').format('YYYYMMDD');
+          console.log(time);
+          hwCatcher.getInfo(time, (e6, output) => {
+            if (e6) {
+              console.log(`e6:${e6}`);
+            } else {
+              api.sendMessage(output, message.threadID);
+            }
+          });
         } else if (message.body === '/about') {
           api.sendMessage('我是屬於SNstudio的fb機器人\n我的主人是林奐呈\n若要參與開發請寄e-mail:\nseanlin12345@gmail.com', message.threadID);
         } else if (message.body === '/SNstudio') {

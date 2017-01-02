@@ -1,66 +1,66 @@
 function disappearsuccessmessage() {
-  $("#showSuccess").hide();
+  $('#showSuccess').hide();
 }
 
-function query(dateString){
-  $("#hw").val("");
-  $("#toBring").val("");
-  $("#test").val("");
+function query(dateString) {
+  $('#hw').val('');
+  $('#toBring').val('');
+  $('#test').val('');
   $.ajax({
-    method: "GET",
-    url: "schoolTodoListApi/v1/todo?date=" + dateString
+    method: 'GET',
+    url: `schoolTodoListApi/v1/todo?date=${dateString}`,
   })
-    .done(function(data) {
+    .done((data) => {
       // alert(data);
-      $("#waveLoader").hide();
+      $('#waveLoader').hide();
       console.log(data);
-      $("#hw").val(data.result.hw);
+      $('#hw').val(data.result.hw);
       // alert(data.result.hw);
-      $("#toBring").val(data.result.toBring);
-      $("#test").val(data.result.test);
+      $('#toBring').val(data.result.toBring);
+      $('#test').val(data.result.test);
     })
-    .fail(function(data) {
+    .fail((data) => {
       // alert("fail");
-      $("#waveLoader").hide();
+      $('#waveLoader').hide();
       console.log(data);
-      $("#hw").text("");
-      $("#toBring").text("");
-      $("#test").text("");
+      $('#hw').text('');
+      $('#toBring').text('');
+      $('#test').text('');
     });
 }
 
-$('#dateInput').keypress(function(event) {
-  if (event.keyCode == 13 || event.which == 13) {
-      $('#queryButton').click();
-      event.preventDefault();
+$('#dateInput').keypress((event) => {
+  if (event.keyCode === 13 || event.which === 13) {
+    $('#queryButton').click();
+    event.preventDefault();
   }
 });
 
-$("#queryButton").on( "click", function () {
-  var dateString = $('#dateInput').val();
-  $("#hw").val("");
-  $("#toBring").val("");
-  $("#test").val("");
+$('#queryButton').on('click', () => {
+  const dateString = $('#dateInput').val();
+  $('#hw').val('');
+  $('#toBring').val('');
+  $('#test').val('');
   $.ajax({
-    method: "GET",
-    url: "schoolTodoListApi/v1/todo?date=" + dateString
+    method: 'GET',
+    url: `schoolTodoListApi/v1/todo?date=${dateString}`,
   })
-    .done(function(data) {
+    .done((data) => {
       // alert(data);
-      $("#waveLoader").hide();
+      $('#waveLoader').hide();
       console.log(data);
-      $("#hw").val(data.result.hw);
+      $('#hw').val(data.result.hw);
       // alert(data.result.hw);
-      $("#toBring").val(data.result.toBring);
-      $("#test").val(data.result.test);
+      $('#toBring').val(data.result.toBring);
+      $('#test').val(data.result.test);
     })
-    .fail(function(data) {
+    .fail((data) => {
       // alert("fail");
-      $("#waveLoader").hide();
+      $('#waveLoader').hide();
       console.log(data);
-      $("#hw").text("");
-      $("#toBring").text("");
-      $("#test").text("");
+      $('#hw').text('');
+      $('#toBring').text('');
+      $('#test').text('');
     });
 });
 
@@ -91,71 +91,70 @@ $("#queryButton").on( "click", function () {
 //     });
 // });
 
-$("#sendButton").on("click", function(e) {
+$('#sendButton').on('click', (e) => {
   // var hw = $("#hw").val();
   // console.log("hw is " + hw);
   // e.preventDefault();
-  $("#hw").text("");
-  $("#toBring").text("");
-  $("#test").text("");
+  $('#hw').text('');
+  $('#toBring').text('');
+  $('#test').text('');
   $.ajax({
-    method: "POST",
-    url: "schoolTodoListApi/v1/todo",
+    method: 'POST',
+    url: 'schoolTodoListApi/v1/todo',
     data: {
-      hw: $("#hw").val(),
-      toBring: $("#toBring").val(),
-      test: $("#test").val(),
-      date: $("#dateInput").val()
-    }
+      hw: $('#hw').val(),
+      toBring: $('#toBring').val(),
+      test: $('#test').val(),
+      date: $('#dateInput').val(),
+    },
     // dataType: "json",
     // contentType: "application/json"
   })
-    .done(function (data) {
-      console.log("success");
+    .done((data) => {
+      console.log('success');
       console.log(data);
-      $("#showSuccess").show();
-      setTimeout("disappearsuccessmessage()", 3000);
+      $('#showSuccess').show();
+      setTimeout('disappearsuccessmessage()', 3000);
     })
-    .fail(function(data) {
-      console.log("fail");
+    .fail((data) => {
+      console.log('fail');
       console.log(data);
     });
-
 });
 
-$("#goViewPage").on("click", function () {
-  var dateString = $('#dateInput').val();
-  document.location.href='/schoolTodoListBlackboard?date=' + dateString;
+$('#goViewPage').on('click', () => {
+  const dateString = $('#dateInput').val();
+  document.location.href = `/schoolTodoListBlackboard?date=${dateString}`;
 });
 
 /*----------------------------------------------------------------------------*/
 
-var date = $('#dateRead').text();
-console.log('date is ' + date);
+const date = $('#dateRead').text();
+console.log(`date is ${date}`);
 $.ajax({
-  method: "GET",
-  url: "schoolTodoListApi/v1/todo?date=" + date
+  method: 'GET',
+  url: `schoolTodoListApi/v1/todo?date=${date}`,
 })
-  .done(function(data) {
+  .done((data) => {
     // alert(data);
-    $("#circleLoader").hide();
+    $('#circleLoader').hide();
     console.log(data);
-    var hwArray = data.result.hw.split('\n');
+    const hwArray = data.result.hw.split('\n');
     for (var i = 0; i < hwArray.length; i++) {
       // hwArray[i]
-      $( "#todayhw" ).append( "<h2 class='blackboard-content'>" + hwArray[i] + "</h2>" );
+      $('#todayhw').append(`<h2 class='blackboard-content'>${hwArray[i]}</h2>`);
     }
 
-    var tobringArray = data.result.toBring.split('\n');
+    const tobringArray = data.result.toBring.split('\n');
     for (var i = 0; i < tobringArray.length; i++) {
       // tobringArray[i]
-      $( "#tomorrowbring" ).append( "<h2 class='blackboard-content'>" + tobringArray[i] + "</h2>" );
+      $('#tomorrowbring').append(`<h2 class='blackboard-content'>${tobringArray[i]}</h2>`);
     }
 
-    var testArray = data.result.test.split('\n');
+    const testArray = data.result.test.split('\n');
     for (var i = 0; i < testArray.length; i++) {
       // testArray[i]
-      $( "#tomorrowtest" ).append( "<h2 class='blackboard-content'>" + testArray[i] + "</h2>" );
+      $('#tomorrowtest').append(`<h2 class='blackboard-content'>${testArray[i]}</h2>`);
     }
     // console.log(hwArray);
     // $("#todayhw").text(data.result.hw);
@@ -164,11 +163,11 @@ $.ajax({
     // $("#tomorrowbring").text(data.result.toBring);
     // $("#tomorrowtest").text(data.result.test);
   })
-  .fail(function(data) {
+  .fail((data) => {
     // alert("fail");
-    $("#circleLoader").hide();
+    $('#circleLoader').hide();
     console.log(data);
-    $("#todayhw").text("");
-    $("#tomorrowbring").text("Loading data fail !!!");
-    $("#tomorrowtest").text("");
+    $('#todayhw').text('');
+    $('#tomorrowbring').text('Loading data fail !!!');
+    $('#tomorrowtest').text('');
   });
