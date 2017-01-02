@@ -20,7 +20,7 @@ function getInfo(date, callback) {
           const output = `${docs[0].hw}\n${docs[0].toBring}\n${docs[0].test}`;
           callback(null, output);
         } else { // success but no target data in db.
-          callback(null, '找不到資料');
+          callback(null, '今天沒抄聯絡簿');
         }
       });
     }

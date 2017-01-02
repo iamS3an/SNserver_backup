@@ -84,14 +84,21 @@ const fbBot = () => {
           api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
         } else if (message.body === '/hw') {
           const time = moment().utcOffset('+08:00').format('YYYYMMDD');
-          console.log(time);
-          hwCatcher.getInfo(time, (e6, output) => {
-            if (e6) {
-              console.log(`e6:${e6}`);
-            } else {
-              api.sendMessage(output, message.threadID);
-            }
-          });
+          // console.log(time);
+          const weekday = moment().utcOffset('+08:00').weekday();
+          if (weekday === 6) {
+            const time = moment().utcOffset('+08:00').weekday(-2).format('YYYYMMDD');
+          } else if (weekday === 0) {
+            const time = moment().utcOffset('+08:00').weekday(-2).format('YYYYMMDD');
+          } else
+            hwCatcher.getInfo(time, (e6, output) => {
+              if (e6) {
+                console.log(`e6:${e6}`);
+              } else {
+                api.sendMessage(output, message.threadID);
+              }
+            });
+          }
         } else if (message.body === '/about') {
           api.sendMessage('我是屬於SNstudio的fb機器人\n我的主人是林奐呈\n若要參與開發請寄e-mail:\nseanlin12345@gmail.com', message.threadID);
         } else if (message.body === '/SNstudio') {
