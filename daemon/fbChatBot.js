@@ -83,14 +83,19 @@ const fbBot = () => {
         if (message.body === '/') {
           api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
         } else if (message.body === '/hw') {
-          const time = moment().utcOffset('+08:00').format('YYYYMMDD');
           // console.log(time);
           const weekday = moment().utcOffset('+08:00').weekday();
-          if (weekday === 6) {
+          if (weekday === 6 || weekday === 0) {
             const time = moment().utcOffset('+08:00').weekday(-2).format('YYYYMMDD');
-          } else if (weekday === 0) {
-            const time = moment().utcOffset('+08:00').weekday(-2).format('YYYYMMDD');
-          } else
+            hwCatcher.getInfo(time, (e6, output) => {
+              if (e6) {
+                console.log(`e6:${e6}`);
+              } else {
+                api.sendMessage(output, message.threadID);
+              }
+            });
+          } else {
+            const time = moment().utcOffset('+08:00').format('YYYYMMDD');
             hwCatcher.getInfo(time, (e6, output) => {
               if (e6) {
                 console.log(`e6:${e6}`);
