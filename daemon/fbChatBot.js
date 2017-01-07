@@ -3,6 +3,7 @@ const login = require('facebook-chat-api');
 const _ = require('lodash');
 const hwCatcher = require('./hwCatcher');
 const overwatch = require('./overwatch');
+// const x = require('../secret/secretProject');
 
 const peterID = '100005650576135';
 const partyID = '1189977174366850';
@@ -80,13 +81,24 @@ const fbBot = () => {
       } else {
         api.markAsRead(message.threadID);
         console.log(JSON.stringify(message, null, 4));
+        api.getThreadInfo(partyID, (e3, info) => {
+          if (e3) {
+            console.error(`e3:${e3}`);
+          } else {
+            check(info, message);
+          }
+        });
         if (message.body === '/') {
-          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about', message.threadID);
+          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about\n(3)查詢battletag請打"/" + bt\n(4)查詢overwatch積分請打"/ow" + "battletag"', message.threadID);
         } else if (message.body === '/hw') {
           // console.log(time);
           const weekday = moment().utcOffset('+08:00').weekday();
           if (weekday === 6 || weekday === 0) {
-            const time = moment().utcOffset('+08:00').weekday(-2).format('YYYYMMDD');
+            let time = moment().utcOffset('+08:00');
+
+            if (weekday === 6) time = time.weekday(5).format('YYYYMMDD');
+            else time = time.weekday(-2).format('YYYYMMDD');
+
             hwCatcher.getInfo(time, (e6, output) => {
               if (e6) {
                 console.log(`e6:${e6}`);
@@ -108,14 +120,35 @@ const fbBot = () => {
           api.sendMessage('我是屬於SNstudio的fb機器人\n我的主人是林奐呈\n若要參與開發請寄e-mail:\nseanlin12345@gmail.com', message.threadID);
         } else if (message.body === '/SNstudio') {
           api.sendMessage('主人什麼的最棒了XDDDD', message.threadID);
+        } else if (message.body === '/bt') {
+          api.sendMessage('尚未開放', message.threadID);
+          api.sendMessage('當世人在盲目追尋牌位時，謹記\n無物為真', message.threadID);
+          api.sendMessage('當世人受戰利品束縛時，謹記\n諸行皆可', message.threadID);
+        } else if (/\/ow/.test(message.body)) {
+          // api.sendMessage('(還不支援中文ID)', message.threadID);
+          const battletag = message.body.split(' ')[1];
+          overwatch.getRank(battletag, (error, result) => {
+            api.sendMessage(`${result}\n(還不支援中文ID)`, message.threadID);
+          });
         }
-        api.getThreadInfo(partyID, (e3, info) => {
-          if (e3) {
-            console.error(`e3:${e3}`);
-          } else {
-            check(info, message);
-          }
-        });
+        //  else if (message.body === '/kick' && message.senderID === seanID) {
+        //   api.getThreadInfo(message.threadID, (e9, info) => {
+        //     if (e9) {
+        //       console.error(`e9:${e9}`);
+        //     } else {
+        //       for (let i = 0; i < info.participantIDs.length; ++i) {
+        //         api.removeUserFromGroup(info.participantIDs[i], message.threadID, (e8) => {
+        //           if (e8) {
+        //             console.error(`e8:${e8}`);
+        //           } else {
+        //             console.log('success');
+        //           }
+        //         });
+        //       }
+        //       console.log('finished');
+        //     }
+        //   });
+        // }
       }
     });
     // setInterval(check(info, message), 60 * 1000);

@@ -27,7 +27,6 @@ function getInfo(date, callback) {
   });
 }
 
-
 module.exports = {
   getInfo,
 };
