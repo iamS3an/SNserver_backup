@@ -9,6 +9,7 @@ const peterID = '100005650576135';
 const partyID = '1189977174366850';
 // const testID = '100001504021620';
 const seanID = '100009254355771';
+const battletag = 'SNstudio#4557\n大爾多#4791\nWesley#3213\njoshcarry#3786\nSnowBall#41836\nmikuXDD#4284\n阿宇仔仔#3676\nXWaynePigX#4542\n小嗚帕#4864\nwaterba1l#4821\nkevin#33536\nsmartdogs#3317';
 // const testPartyID = '1362278277118706';
 
 // const mongodb = () => {
@@ -121,9 +122,9 @@ const fbBot = () => {
         } else if (message.body === '/SNstudio') {
           api.sendMessage('主人什麼的最棒了XDDDD', message.threadID);
         } else if (message.body === '/bt') {
-          api.sendMessage('尚未開放', message.threadID);
-          api.sendMessage('當世人在盲目追尋牌位時，謹記\n無物為真', message.threadID);
-          api.sendMessage('當世人受戰利品束縛時，謹記\n諸行皆可', message.threadID);
+          api.sendMessage(battletag, message.threadID);
+          // api.sendMessage('當世人在盲目追尋牌位時，謹記\n無物為真', message.threadID);
+          // api.sendMessage('當世人受戰利品束縛時，謹記\n諸行皆可', message.threadID);
         } else if (/\/ow/.test(message.body)) {
           // api.sendMessage('(還不支援中文ID)', message.threadID);
           const battletag = message.body.split(' ')[1];
