@@ -3,9 +3,10 @@ const login = require('facebook-chat-api');
 const _ = require('lodash');
 const hwCatcher = require('./hwCatcher');
 const overwatch = require('./overwatch');
-// const x = require('../secret/secretProject');
+const x = require('../secret/secretProject');
 
-const peterID = '100005650576135';
+const botID = '100014527650951';
+// const peterID = '100005650576135';
 const partyID = '1189977174366850';
 // const testID = '100001504021620';
 const seanID = '100009254355771';
@@ -53,28 +54,28 @@ const fbBot = () => {
     });
 
 
-    const check = (info, message) => {
-      // for (var i = 0; i < info.participantIDs.length; i++) {
-      //   info.participantIDs[i]
-      // }
-      if (_.indexOf(info.participantIDs, seanID) < 0) {
-        api.sendMessage('我主人不在裡面ㄟ，一定是大耳朵幹的', message.threadID);
-        api.removeUserFromGroup(peterID, partyID, (e4) => {
-          if (e4) {
-            console.error(`e4:${e4}`);
-          } else {
-            console.log('kicked');
-          }
-        });
-        api.addUserToGroup(seanID, partyID, (e5) => {
-          if (e5) {
-            console.error(`e5:${e5}`);
-          } else {
-            console.log('added');
-          }
-        });
-      }
-    };
+    // const check = (info, message) => {
+    //   // for (var i = 0; i < info.participantIDs.length; i++) {
+    //   //   info.participantIDs[i]
+    //   // }
+    //   if (_.indexOf(info.participantIDs, seanID) < 0) {
+    //     api.sendMessage('我主人不在裡面ㄟ，一定是大耳朵幹的', message.threadID);
+    //     api.removeUserFromGroup(peterID, partyID, (e4) => {
+    //       if (e4) {
+    //         console.error(`e4:${e4}`);
+    //       } else {
+    //         console.log('kicked');
+    //       }
+    //     });
+    //     api.addUserToGroup(seanID, partyID, (e5) => {
+    //       if (e5) {
+    //         console.error(`e5:${e5}`);
+    //       } else {
+    //         console.log('added');
+    //       }
+    //     });
+    //   }
+    // };
 
     api.listen((e2, message) => {
       if (e2) {
@@ -82,15 +83,15 @@ const fbBot = () => {
       } else {
         api.markAsRead(message.threadID);
         console.log(JSON.stringify(message, null, 4));
-        api.getThreadInfo(partyID, (e3, info) => {
-          if (e3) {
-            console.error(`e3:${e3}`);
-          } else {
-            check(info, message);
-          }
-        });
+        // api.getThreadInfo(partyID, (e3, info) => {
+        //   if (e3) {
+        //     console.error(`e3:${e3}`);
+        //   } else {
+        //     check(info, message);
+        //   }
+        // });
         if (message.body === '/') {
-          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about\n(3)查詢battletag請打"/" + bt\n(4)查詢overwatch積分請打"/ow" + "battletag"', message.threadID);
+          api.sendMessage('請問你要查詢：\n(1)查詢作業請打"/" + hw\n(2)關於我請打"/" + about\n(3)查詢battletag請打"/" + bt\n(4)查詢overwatch積分請打"/ow" + " " + "battletag"', message.threadID);
         } else if (message.body === '/hw') {
           // console.log(time);
           const weekday = moment().utcOffset('+08:00').weekday();
@@ -122,34 +123,65 @@ const fbBot = () => {
         } else if (message.body === '/SNstudio') {
           api.sendMessage('主人什麼的最棒了XDDDD', message.threadID);
         } else if (message.body === '/bt') {
-          api.sendMessage(battletag, message.threadID);
+          api.sendMessage(`範例battletag:\n${battletag}`, message.threadID);
           // api.sendMessage('當世人在盲目追尋牌位時，謹記\n無物為真', message.threadID);
           // api.sendMessage('當世人受戰利品束縛時，謹記\n諸行皆可', message.threadID);
         } else if (/\/ow/.test(message.body)) {
           // api.sendMessage('(還不支援中文ID)', message.threadID);
-          const battletag = message.body.split(' ')[1];
-          overwatch.getRank(battletag, (error, result) => {
-            api.sendMessage(`${result}\n(還不支援中文ID)`, message.threadID);
+          try {
+            const battletag = message.body.split(' ')[1];
+            overwatch.getRank(battletag, (e4, result) => {
+              if (e4) {
+                console.log(`${e4}`);
+              } else {
+                api.sendMessage(`${result}`, message.threadID);
+              }
+            });
+          } catch (error) {
+            console.log(error);
+            api.sendMessage('指令和battletag中間要空格', message.threadID);
+          }
+        } else if (message.body === '/benny') {
+          x.getV('zzz', (e5, result) => {
+            if (e5) {
+              console.log(`${e5}`);
+            } else {
+              // console.log(`${result}`);
+              api.sendMessage(result, message.threadID);
+            }
           });
+        } else if (message.body === '/kick') {
+          if (message.senderID === seanID) {
+            api.getThreadInfo(message.threadID, (e9, info) => {
+              if (e9) {
+                console.error(`e9:${e9}`);
+              } else {
+                for (let i = 0; i < info.participantIDs.length; ++i) {
+                  if (info.participantIDs[i] === botID) {
+                    i++;
+                  }
+                  api.removeUserFromGroup(info.participantIDs[i], message.threadID, (e8) => {
+                    if (e8) {
+                      console.error(`e8:${e8}`);
+                    } else {
+                      console.log('success');
+                    }
+                  });
+                }
+                api.removeUserFromGroup(botID, message.threadID, (e10) => {
+                  if (e10) {
+                    console.error(`e10:${e10}`);
+                  } else {
+                    console.log('success');
+                  }
+                });
+                console.log('finished');
+              }
+            });
+          } else {
+            api.sendMessage('你沒有權限使用', message.threadID);
+          }
         }
-        //  else if (message.body === '/kick' && message.senderID === seanID) {
-        //   api.getThreadInfo(message.threadID, (e9, info) => {
-        //     if (e9) {
-        //       console.error(`e9:${e9}`);
-        //     } else {
-        //       for (let i = 0; i < info.participantIDs.length; ++i) {
-        //         api.removeUserFromGroup(info.participantIDs[i], message.threadID, (e8) => {
-        //           if (e8) {
-        //             console.error(`e8:${e8}`);
-        //           } else {
-        //             console.log('success');
-        //           }
-        //         });
-        //       }
-        //       console.log('finished');
-        //     }
-        //   });
-        // }
       }
     });
     // setInterval(check(info, message), 60 * 1000);

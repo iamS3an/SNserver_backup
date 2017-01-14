@@ -1,11 +1,14 @@
 const cheerio = require('cheerio');
 const request = require('request');
+// const iconv = require('iconv-lite');
 // const stringjs = require('string');
+// const utf8 = require('utf8');
 
 function getRank(battletag, callback) {
   const tag = battletag.replace('#', '-');
-  const url = `https://playoverwatch.com/zh-tw/career/pc/kr/${tag}`;
-
+  // const big5Tag = encodeURI(tag).toString();
+  const url = encodeURI(`https://playoverwatch.com/zh-tw/career/pc/kr/${tag}`);
+  // console.log(`big5Tag:${big5Tag}`);
   request(url, (e1, response, body) => {
     if (e1) {
       console.error(`e1:${e1}`);
