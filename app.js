@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 const users = require('./routes/users');
 const schoolTodoListApi = require('./routes/schoolTodoListApi');
-const fbChatBot = require('./daemon/fbChatBot');
+// const fbChatBot = require('./daemon/fbChatBot');
 
 const app = express();
 
@@ -58,6 +58,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-fbChatBot.fbBot();
+// fbChatBot.fbBot();
 
 module.exports = app;

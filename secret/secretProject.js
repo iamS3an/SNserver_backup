@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 
 function getV(things, callback) {
-  const url = 'http://www.euphoriaporn.com/top-japanese/page-1.php';
+  const url = encodeURI('https://wuso.me/forum-jsav-1.html');
 
   request(url, (e1, response, body) => {
     if (e1) {
@@ -10,9 +10,10 @@ function getV(things, callback) {
     } else {
       const $ = cheerio.load(body);
       // console.log(body);
-      const link = $('#left-column-wide').children().first().next().next().children().children().children().first().attr('href');
-      console.log('success!');
-      callback(null, `http://www.euphoriaporn.com${link}`);
+      const link1 = $('#waterfall').children().first().children().children().attr('href');
+      // const link2 = $('#waterfall').children().first().next().children().children().attr('href');
+      // const link3 = $('#waterfall').children().first().next().next().children().children().attr('href');
+      callback(null, `${link1}`);
     }
   });
 }
