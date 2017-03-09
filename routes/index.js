@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  res.render('index', { title: 'Hi,你好' });
+  res.render('index', { title: 'Express' });
 });
 
 // //botzzz
