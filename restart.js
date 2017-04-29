@@ -17,7 +17,7 @@ setInterval(() => {
       }
     });
   }
-  if (moment().hours() === 15) {
+  if (moment().hours() === 14) {
     exec(SeanLinBot, (err, stdout, stderr) => {
       if (err) {
         console.log(`error:${stderr}`);

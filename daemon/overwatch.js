@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 
 function getRank(battletag, callback) {
-  const tag = battletag.replace('#', '-');
+  const tag = battletag.replace('#', '-').replace('<', '').replace('>', '');
   const url = encodeURI(`https://playoverwatch.com/zh-tw/career/pc/kr/${tag}`);
   request(url, (e1, response, body) => {
     if (e1) {
@@ -14,27 +14,29 @@ function getRank(battletag, callback) {
       const scoreInt = parseInt(score, 10);
       let level;
       if (scoreInt <= 1499 && scoreInt >= 1) {
-        level = '銅牌';
+        level = '銅牌(Bronze)';
       } else if (scoreInt <= 1999 && scoreInt >= 1500) {
-        level = '銀牌';
+        level = '銀牌(Silver)';
       } else if (scoreInt <= 2499 && scoreInt >= 2000) {
-        level = '金牌';
+        level = '金牌(Gold)';
       } else if (scoreInt <= 2999 && scoreInt >= 2500) {
-        level = '白金';
+        level = '白金(Platinum)';
       } else if (scoreInt <= 3499 && scoreInt >= 3000) {
-        level = '鑽石';
-      } else if (scoreInt <= 3500 && scoreInt >= 3999) {
-        level = '大師';
+        level = '鑽石(Diamond)';
+      } else if (scoreInt <= 3999 && scoreInt >= 3500) {
+        level = '大師(Master)';
       } else if (scoreInt >= 4000) {
-        level = '宗師';
+        level = '宗師(Grandmaster)';
+      } else {
+        level = '無(none)';
       }
       callback(null, `目前積分:${score}\n所屬牌位:${level}`);
     }
   });
 }
 function getInfo(battletag, callback) {
-  const tag = battletag.replace('#', '-');
-  const url = encodeURI(`https://playoverwatch.com/zh-tw /career/pc/kr/${tag}`);
+  const tag = battletag.replace('#', '-').replace('<', '').replace('>', '');
+  const url = encodeURI(`https://playoverwatch.com/zh-tw/career/pc/kr/${tag}`);
   request(url, (e2, response, body) => {
     if (e2) {
       console.error(`e2:${e2}`);

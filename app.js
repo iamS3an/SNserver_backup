@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 
 const routes = require('./routes/index');
 const users = require('./routes/users');
+const fanpage = require('./routes/fanpage');
 const schoolTodoListApi = require('./routes/schoolTodoListApi');
 // const fbChatBot = require('./daemon/fbChatBot');
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/schoolTodoListApi', schoolTodoListApi);
+app.use('/webhook', fanpage);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error('Not Found');
