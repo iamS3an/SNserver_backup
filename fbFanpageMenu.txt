@@ -5,14 +5,20 @@ curl -X POST -H "Content-Type: application/json" -d '{
       "composer_input_disabled":false,
       "call_to_actions":[
         {
-          "title":"使用說明",
-          "type":"postback",
-          "payload":"MANUAL_PAYLOAD"
-        },
-        {
           "title":"綁定battletag",
           "type":"postback",
           "payload":"BINDBATTLETAG_PAYLOAD"
+        },
+        {
+          "title":"指定角色查詢(要先綁定battletag才能使用)",
+          "type":"nested",
+          "call_to_actions":[
+            {
+              "title":"法拉",
+              "type":"postback",
+              "payload":"HERO_PHARAH"
+            }
+          ]
         },
         {
           "type":"web_url",
@@ -27,4 +33,4 @@ curl -X POST -H "Content-Type: application/json" -d '{
       "composer_input_disabled":false
     }
   ]
-}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAABxkUvtNC8BAHlax7Kr5ZCwlLr7XoZB7OB5Bsn5pgZBeFboeJom1vtQvtQuolc79SAHR2k3XDVZB6EyKoprnCcI9waNpKY1vzYHXkDllRwOKyU3DiyP4NdmrCXvYwlXBZCtZAocEhyUVCi8RZCZCR26bPYiIDCedbLR8nrcOLJyiwZDZD"
+}' "https://graph.facebook.com/v2.6/me/messenger_profile?access_token=EAABxkUvtNC8BAN8xTmuvvnNWKaIDzWZA2BIaX0p7bLd7df1UFZCLgAgdaLTHUSoWGhgPZCQ7X18wPpbYkzZBjWVDaPkNyfZCNYJcYd91egAqTsmOiVTVDYIN71O9ethCawuJmTmXTXrEZAR6QnWdC7F4uZBsuLZCwxQkb0ZAQ2t6WBQZDZD"

@@ -125,9 +125,6 @@ function compare(battletag1, battletag2, callback) {
   });
 }
 
-// compare('SNstudio#4557', 'SnowBall#41836', (err, result) => {
-//   console.log(result);
-// });
 
 module.exports = {
   output,
