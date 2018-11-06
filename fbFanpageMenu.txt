@@ -10,17 +10,6 @@ curl -X POST -H "Content-Type: application/json" -d '{
           "payload":"BINDBATTLETAG_PAYLOAD"
         },
         {
-          "title":"指定角色查詢(要先綁定battletag才能使用)",
-          "type":"nested",
-          "call_to_actions":[
-            {
-              "title":"法拉",
-              "type":"postback",
-              "payload":"HERO_PHARAH"
-            }
-          ]
-        },
-        {
           "type":"web_url",
           "title":"關於作者",
           "url":"https://snstudio.xyz",

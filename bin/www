@@ -94,6 +94,7 @@ function onListening() {
 const options = {
   key: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.key'),
   cert: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.chained.crt'),
+  ca: fs.readFileSync('/etc/ssl/websitessl/GandiStandardSSLCA2.pem'),
   requestCert: true,
   rejectUnauthorized: false,
 };

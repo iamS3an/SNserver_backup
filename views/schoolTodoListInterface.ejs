@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="stylesheets/jumbotron.css" rel="stylesheet">
 
+    <link href="stylesheets/seanCss.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="javascripts/ie-emulation-modes-warning.js"></script>
@@ -47,10 +48,10 @@
                 </button>
               </td> -->
               <td class="navbar-brand">
-                網頁式聯絡簿
+                忠班記事本
               </td>
               <td>
-                <input type="text" class="form-control" placeholder="請輸入日期" id="dateInput" onchange="query(this.value)">
+                <input type="text" class="form-control" placeholder="請輸入日期ex20170215" id="dateInput" onchange="query(this.value)">
               </td>
               <td>&nbsp;
                 <button type="button" class="btn btn-success" id="queryButton">查詢</button>
@@ -62,7 +63,7 @@
           </table>
         </div>
           <div class="navbar-form navbar-right">
-              <button id="goViewPage" class="btn btn-link">view</button>
+              <button id="goViewPage" class="btn btn-link">小黑板</button>
           </div>
         <div id="navbar" class="navbar-collapse collapse">
         </div><!--/.navbar-collapse -->
@@ -85,9 +86,9 @@
           <div class="rect4"></div>
           <div class="rect5"></div>
         </div> -->
-        <h1>This website is powered by SNstudio</h1>
-        <p>This interface makes it easy for 217 classmates to share and record the important things,
-and it makes it easy to update the todo list that you're sharing. If you have any need, please feel free to contact seanlin12345@gmail.com</p>
+        <h1>Messenger中搜尋 ==> Hw Bot</h1>
+        <h2>FB粉專機器人24hr秒回服務，回家後也可以知道當日的功課呦：）</h2>
+        <br></br>
         <button class="btn btn-primary btn-lg" type="text" id="sendButton">送出 &raquo;</button>
         <div style="display:none" class="alert alert-success" role="alert" id="showSuccess">
           <a href="#" class="alert-link">送出成功</a>
@@ -99,19 +100,19 @@ and it makes it easy to update the todo list that you're sharing. If you have an
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
-          <h2>今日作業</h2>
+          <h2>作業</h2>
           <div class="form-group">
             <textarea class="form-control" rows="5" id="hw"></textarea>
           </div>
         </div>
         <div class="col-md-4">
-          <h2>明天要帶</h2>
+          <h2>要帶</h2>
           <div class="form-group">
             <textarea class="form-control" rows="5" id="toBring"></textarea>
           </div>
        </div>
         <div class="col-md-4">
-          <h2>明天要考</h2>
+          <h2>要考</h2>
           <div class="form-group">
             <textarea class="form-control" rows="5" id="test"></textarea>
           </div>
@@ -121,7 +122,7 @@ and it makes it easy to update the todo list that you're sharing. If you have an
       <hr>
 
       <footer>
-        <p>&copy; 2016 SNstudio</p>
+        <p>&copy; 2016-2018 SNstudio</p>
       </footer>
     </div> <!-- /container -->
 

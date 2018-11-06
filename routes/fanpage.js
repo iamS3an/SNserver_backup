@@ -1,20 +1,24 @@
 const express = require('express');
 const request = require('request');
 const moment = require('moment');
-const overwatch = require('../daemon/overwatch');
+// const overwatch = require('../daemon/overwatch');
 const hw = require('../daemon/hwCatcher');
-const MongoClient = require('mongodb').MongoClient;
+// const MongoClient = require('mongodb').MongoClient;
 
 const router = express.Router();
-const mongodbUrl = 'mongodb://snserver:1qa2ws3ed@ds017636.mlab.com:17636/seandb';
-const owToken = 'EAABxkUvtNC8BAN8xTmuvvnNWKaIDzWZA2BIaX0p7bLd7df1UFZCLgAgdaLTHUSoWGhgPZCQ7X18wPpbYkzZBjWVDaPkNyfZCNYJcYd91egAqTsmOiVTVDYIN71O9ethCawuJmTmXTXrEZAR6QnWdC7F4uZBsuLZCwxQkb0ZAQ2t6WBQZDZD';
-const hwToken = 'EAADFXUMf4EwBAKuI0eidGslF8Y9RaNKf66pLm5epjQDsATHv2YGpQP5M1X5Kbn8jNsYFVXsnuZBz7FVZCxF0VwcrYpFS4MkPDAqQJVdt3yP8KdnRjRhyuZCeZB5KxyRrPBGaWypqGFAh2xxhhBzQJoRCZCcjgMyHZAvxfMvUNU1gZDZD';
-
+// const mongodbUrl = 'mongodb://snserver:1qa2ws3ed@ds017636.mlab.com:17636/seandb';
+// const owToken = 'EAABxkUvtNC8BABa7ePKEVEVP4pvARpX8HUfZB5i8VKGQH02YEi7Qnt8y8wmqL17ZAXKlSrMQZCu4apR55nDTOMU1FZCZB04VRZC3pV5GLSqtuq18Asl981cwOO6GlHZAle8fmdWK6vaH5ZCErT3kH2U8Ppp8s3aEvoPnfZBCdjksRugZDZD';
+const hwToken = 'EAADFXUMf4EwBABL9SZC5IivfRR4jRJAtzCo8m1E4ASOO2Hf5LzjrFNQujjGppi8SipeT4ZBZALVRBUIBh6ak7vTu0CuFjpzJN4GuR6CXJA218Ma7xIT4O1Ghc7US4lzrjByV98KbLLXTFkhyCyZCAFhZCtAkK954p6YBiZARNXZBwZDZD';
+// const hwToken = '70941302502d1ab4efe07b5f62753f11';
 router.get('/', (req, res) => {
   if (req.query['hub.verify_token'] === 'snstudio666') {
+    console.log('666');
     res.send(req.query['hub.challenge']);
+    // console.log('666');
   } else if (req.query['hub.verify_token'] === 'snstudio777') {
+    console.log('777');
     res.send(req.query['hub.challenge']);
+    // console.log('777');
   }
   res.send('Error, wrong validation token');
 });
@@ -54,156 +58,67 @@ function sendTextMessageHw(recipientId, messageText) {
   callSendAPI(messageData, hwToken);
 }
 
-function sendTextMessage(recipientId, messageText) {
-  const messageData = {
-    recipient: {
-      id: recipientId,
-    },
-    message: {
-      text: messageText,
-    },
-  };
+// function sendTextMessageOw(recipientId, messageText) {
+//   const messageData = {
+//     recipient: {
+//       id: recipientId,
+//     },
+//     message: {
+//       text: messageText,
+//     },
+//   };
+//   callSendAPI(messageData, owToken);
+// }
 
-  callSendAPI(messageData, owToken);
-}
+// function initialTextMessage(recipientId) {
+//   sendTextMessageOw(recipientId, '(1)查詢overwatch積分請打/ow <battletag>\n範例:/ow SNstudio#4557\n(2)比較overwatch戰積請打/比較 <第一個人的battletag> <第二個人的battletag>\n範例:/比較 SNstudio#4557 大爾多#4791');
+//   // sendHotKeywordQuickReply(recipientId);
+// }
 
-function initialTextMessage(recipientId) {
-  sendTextMessage(recipientId, '(1)查詢overwatch積分請打/ow <battletag>\n範例:/ow SNstudio#4557\n(2)比較overwatch戰積請打/比較 <第一個人的battletag> <第二個人的battletag>\n範例:/比較 SNstudio#4557 大爾多#4791');
-  // sendHotKeywordQuickReply(recipientId);
-}
+// function register(senderID, battletag) {
+//   MongoClient.connect(mongodbUrl, (err, database) => {
+//     const collection = database.collection('battletagtable');
+//     const btObject = {
+//       battletag,
+//       senderID,
+//     };
+//     const filter = {
+//       senderID,
+//     };
+//     collection.updateMany(filter, { $set: btObject }, { upsert: true }, (error) => {
+//       if (!error) {
+//         console.log('success');
+//       } else {
+//         console.log('fail');
+//       }
+//     });
+//   });
+//   sendTextMessageOw(senderID, `${battletag}已和您的fb帳號綁定!`);
+// }
 
-function register(senderID, battletag) {
-  MongoClient.connect(mongodbUrl, (err, database) => {
-    const collection = database.collection('battletagtable');
-    const btObject = {
-      battletag,
-      senderID,
-    };
-    const filter = {
-      senderID,
-    };
-    collection.updateMany(filter, { $set: btObject }, { upsert: true }, (error) => {
-      if (!error) {
-        console.log('success');
-      } else {
-        console.log('fail');
-      }
-    });
-  });
-  sendTextMessage(senderID, `${battletag}已和您的fb帳號綁定!`);
-}
-
-function getUserInfo(senderID, callback) {
-  MongoClient.connect(mongodbUrl, (err, database) => {
-    const collection = database.collection('battletagtable');
-    const filter = {
-      senderID,
-    };
-    collection.find(filter).toArray((error, docs) => {
-      if (!error) {
-        if (docs.length === 0) {
-          callback('cannot find the battletag', null);
-        } else {
-          callback(null, docs[0].battletag);
-        }
-      } else {
-        callback(error, null);
-      }
-    });
-  });
-}
-
-function receivedMessage(event) {
-  const senderID = event.sender.id;
-  const recipientID = event.recipient.id;
-  const timeOfMessage = event.timestamp;
-  const message = event.message;
-
-  console.log('Received message for user %d and page %d at %d with message:',
-    senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
-
-  const messageText = message.text;
-  const messageAttachments = message.attachments;
-
-  if (messageText) {
-    if (/ow/.test(messageText)) {
-      console.log('/ow.....');
-      try {
-        const msg = messageText;
-        const battletag = msg.split(' ')[1];
-        sendTextMessage(senderID, '正在為您查詢中，請稍候...');
-        overwatch.output(battletag, (e100, result) => {
-          if (e100) {
-            console.log(`${e100}`);
-          } else {
-            sendTextMessage(senderID, `${result}`);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-        sendTextMessage(senderID, '錯誤 > <');
-      }
-    } else if (/比較/.test(messageText)) {
-      try {
-        const battletag1 = messageText.split(' ')[1];
-        const battletag2 = messageText.split(' ')[2];
-        sendTextMessage(senderID, '正在為您查詢中，請稍候...');
-        overwatch.compare(battletag1, battletag2, (e101, result) => {
-          if (e101) {
-            console.log(`${e101}`);
-          } else {
-            sendTextMessage(senderID, `${result}`);
-          }
-        });
-      } catch (error) {
-        console.log(error);
-        sendTextMessage(senderID, '錯誤 > <');
-      }
-    } else if (/help/.test(messageText)) {
-      initialTextMessage(senderID);
-    } else if (/bt/.test(messageText)) {
-      try {
-        const msg = messageText;
-        const battletag = msg.split(' ')[1];
-        // sendTextMessage(senderID, '正在為您連結中，請稍候...');
-        register(senderID, battletag);
-      } catch (error) {
-        console.log(error);
-        sendTextMessage(senderID, '錯誤 > <');
-      }
-    } else if (messageAttachments) {
-      sendTextMessage(senderID, '你在讚什麼？');
-    } else if (/my/.test(messageText)) {
-      try {
-        // const msg = messageText;
-        getUserInfo(senderID, (e103, bt) => {
-          if (e103) {
-            console.log(e103);
-            sendTextMessage(senderID, '你沒註冊喔');
-          } else {
-            sendTextMessage(senderID, '正在為您查詢中，請稍候...');
-            overwatch.output(bt, (e102, result) => {
-              if (e102) {
-                console.log(`${e102}`);
-              } else {
-                sendTextMessage(senderID, `${result}`);
-              }
-            });
-          }
-        });
-      } catch (error) {
-        console.log(error);
-        sendTextMessage(senderID, '錯誤 > <');
-      }
-    } else {
-      sendTextMessage(senderID, '我看不懂你在說什麼');
-    }
-  }
-}
+// function getUserInfo(senderID, callback) {
+//   MongoClient.connect(mongodbUrl, (err, database) => {
+//     const collection = database.collection('battletagtable');
+//     const filter = {
+//       senderID,
+//     };
+//     collection.find(filter).toArray((error, docs) => {
+//       if (!error) {
+//         if (docs.length === 0) {
+//           callback('cannot find the battletag', null);
+//         } else {
+//           callback(null, docs[0].battletag);
+//         }
+//       } else {
+//         callback(error, null);
+//       }
+//     });
+//   });
+// }
 
 function hwCatch(senderID) {
   const weekday = moment().utcOffset('+08:00').weekday();
+  sendTextMessageHw(senderID, '正在為您查詢中，請稍候٩(˃̶͈̀௰˂̶͈́)و');
   if (weekday === 6 || weekday === 0) {
     let time = moment().utcOffset('+08:00');
 
@@ -229,6 +144,114 @@ function hwCatch(senderID) {
   }
 }
 
+function receivedMessage(event) {
+  const senderID = event.sender.id;
+  const recipientID = event.recipient.id;
+  const timeOfMessage = event.timestamp;
+  const message = event.message;
+
+  console.log('Received message for user %d and page %d at %d with message:',
+    senderID, recipientID, timeOfMessage);
+  console.log(JSON.stringify(message));
+
+  const messageText = message.text;
+  // const messageAttachments = message.attachments;
+  console.log(`senderID:${senderID}`);
+  if (messageText) {
+    if (/20/.test(messageText)) {
+      sendTextMessageHw(senderID, '正在為您查詢中，請稍候٩(˃̶͈̀௰˂̶͈́)و');
+      hw.getInfo(messageText, (e2, output) => {
+        if (e2) {
+          console.log(`e2:${e2}`);
+        } else {
+          sendTextMessageHw(senderID, output);
+        }
+      });
+    } else if (/謝/.test(messageText)) {
+      sendTextMessageHw(senderID, '不客氣');
+    } else if (/hi/.test(messageText) || /嗨/.test(messageText) || /Hi/.test(messageText)) {
+      sendTextMessageHw(senderID, 'Hi!你好');
+    } else if (/help/.test(messageText) || /Help/.test(messageText)) {
+      sendTextMessageHw(senderID, '正在通知開發者中，請稍候...');
+      sendTextMessageHw(1229662330493167, `來自使用者${senderID}的求助！`);
+    }
+  }
+  // if (messageText) {
+  //   if (/ow/.test(messageText)) {
+  //     console.log('/ow.....');
+  //     try {
+  //       const msg = messageText;
+  //       const battletag = msg.split(' ')[1];
+  //       sendTextMessageOw(senderID, '正在為您查詢中，請稍候...');
+  //       overwatch.output(battletag, (e100, result) => {
+  //         if (e100) {
+  //           console.log(`${e100}`);
+  //         } else {
+  //           sendTextMessageOw(senderID, `${result}`);
+  //         }
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //       sendTextMessageOw(senderID, '錯誤 > <');
+  //     }
+  //   } else if (/比較/.test(messageText)) {
+  //     try {
+  //       const battletag1 = messageText.split(' ')[1];
+  //       const battletag2 = messageText.split(' ')[2];
+  //       sendTextMessageOw(senderID, '正在為您查詢中，請稍候...');
+  //       overwatch.compare(battletag1, battletag2, (e101, result) => {
+  //         if (e101) {
+  //           console.log(`${e101}`);
+  //         } else {
+  //           sendTextMessageOw(senderID, `${result}`);
+  //         }
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //       sendTextMessageOw(senderID, '錯誤 > <');
+  //     }
+  //   } else if (/help/.test(messageText)) {
+  //     initialTextMessage(senderID);
+  //   } else if (/bt/.test(messageText)) {
+  //     try {
+  //       const msg = messageText;
+  //       const battletag = msg.split(' ')[1];
+  //       // sendTextMessageOw(senderID, '正在為您連結中，請稍候...');
+  //       register(senderID, battletag);
+  //     } catch (error) {
+  //       console.log(error);
+  //       sendTextMessageOw(senderID, '錯誤 > <');
+  //     }
+  //   } else if (messageAttachments) {
+  //     sendTextMessageOw(senderID, '你在讚什麼？');
+  //   } else if (/my/.test(messageText)) {
+  //     try {
+  //       // const msg = messageText;
+  //       getUserInfo(senderID, (e103, bt) => {
+  //         if (e103) {
+  //           console.log(e103);
+  //           sendTextMessageOw(senderID, '你沒註冊喔');
+  //         } else {
+  //           sendTextMessageOw(senderID, '正在為您查詢中，請稍候...');
+  //           overwatch.output(bt, (e102, result) => {
+  //             if (e102) {
+  //               console.log(`${e102}`);
+  //             } else {
+  //               sendTextMessageOw(senderID, `${result}`);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //       sendTextMessageOw(senderID, '錯誤 > <');
+  //     }
+  //   } else {
+  //     sendTextMessageOw(senderID, '我看不懂你在說什麼');
+  //   }
+  // }
+}
+
 function receivedPostback(event) {
   const senderID = event.sender.id;
   const recipientID = event.recipient.id;
@@ -244,15 +267,15 @@ function receivedPostback(event) {
   // When a postback is called, we'll send a message back to the sender to
   // let them know it was successful
   switch (payload) {
-    case 'GET_STARTED_PAYLOAD':
-      initialTextMessage(senderID);
-      break;
-    case 'MANUAL_PAYLOAD':
-      initialTextMessage(senderID);
-      break;
-    case 'BINDBATTLETAG_PAYLOAD':
-      sendTextMessage(senderID, '輸入/bt <你的battletag>來把你的fb帳號和battletag連結\n以後你只要打/my就可以查詢你的戰績');
-      break;
+    // case 'GET_STARTED_PAYLOAD':
+    //   initialTextMessage(senderID);
+    //   break;
+    // case 'MANUAL_PAYLOAD':
+    //   initialTextMessage(senderID);
+    //   break;
+    // case 'BINDBATTLETAG_PAYLOAD':
+    //   sendTextMessageOw(senderID, '輸入/bt <你的battletag>來把你的fb帳號和battletag連結\n以後你只要打/my就可以查詢你的戰績');
+    //   break;
     case 'HW_PAYLOAD':
       hwCatch(senderID);
       break;
@@ -260,7 +283,7 @@ function receivedPostback(event) {
       hwCatch(senderID);
       break;
     default:
-      sendTextMessage(senderID, '還沒做好');
+      sendTextMessageHw(senderID, '還沒做好');
       break;
   }
 }
