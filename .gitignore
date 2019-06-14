@@ -8,3 +8,6 @@ node_modules/
 *.lock
 *.out
 SeanLinReadBot.js
+*.crt
+*.csr
+*.key
