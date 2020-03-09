@@ -10,7 +10,7 @@
     "cheerio": "^0.22.0",
     "cookie-parser": "^1.4.4",
     "debug": "~2.2.0",
-    "ejs": "~2.4.1",
+    "ejs": "~3.0.1",
     "express": "~4.13.4",
     "facebook-chat-api": "^1.7.0",
     "iconv-lite": "^0.4.24",
