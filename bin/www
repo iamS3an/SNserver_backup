@@ -7,8 +7,8 @@
 const app = require('../app');
 const debug = require('debug')('SNserver:server');
 const http = require('http');
-const https = require('https');
-const fs = require('fs');
+// const https = require('https');
+// const fs = require('fs');
 
 /**
  * Get port from environment and store in Express.
@@ -91,14 +91,14 @@ function onListening() {
   debug(`Listening on ${bind}`);
 }
 
-const options = {
-  key: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.key'),
-  cert: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.chained.crt'),
-  ca: fs.readFileSync('/etc/ssl/websitessl/GandiStandardSSLCA2.pem'),
-  requestCert: true,
-  rejectUnauthorized: false,
-};
+// const options = {
+//   key: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.key'),
+//   cert: fs.readFileSync('/etc/ssl/websitessl/snstudio.xyz.chained.crt'),
+//   ca: fs.readFileSync('/etc/ssl/websitessl/GandiStandardSSLCA2.pem'),
+//   requestCert: true,
+//   rejectUnauthorized: false,
+// };
 
-const secureServer = https.createServer(options, app);
-secureServer.listen(3001);
-secureServer.on('error', onError);
+// const secureServer = https.createServer(options, app);
+// secureServer.listen(3001);
+// secureServer.on('error', onError);
