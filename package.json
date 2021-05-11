@@ -14,7 +14,7 @@
     "express": "~4.13.4",
     "facebook-chat-api": "^1.7.0",
     "iconv-lite": "^0.4.24",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "moment": "^2.24.0",
     "mongodb": "^2.2.36",
     "morgan": "~1.9.1",
