@@ -1,4 +1,4 @@
-# Sean's private sever #
+# Sean's private server backup info #
 
 Now, all service had stopped
 
