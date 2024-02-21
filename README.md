@@ -1,8 +1,8 @@
 # Sean's private server backup info #
 
-### Now, all service had stopped
+> Note: All services had stopped
 
-Old Service：
+### Old Service：
 
 * Overwatch Rank Search Bot 2016-2018
 
