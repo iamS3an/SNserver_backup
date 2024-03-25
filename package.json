@@ -11,7 +11,7 @@
     "cookie-parser": "^1.4.4",
     "debug": "~2.6.9",
     "ejs": "~2.5.5",
-    "express": "~4.13.4",
+    "express": "~4.19.2",
     "facebook-chat-api": "^1.7.0",
     "iconv-lite": "^0.4.24",
     "lodash": "^4.17.15",
